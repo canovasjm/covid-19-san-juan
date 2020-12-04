@@ -21,20 +21,25 @@ html = requests.get(url).content
 sel = Selector(text = html)
 print("The number of elements in the HTML is: ", len(sel.xpath('//*')))
 
-# from the selector, extract categories and cases
+# from the selector, extract categories
 categories = sel.css('.g-table-title h4 ::text').extract()
+
+# from the selector, extract cases
 cases = sel.css('div.g-table-price ::text').extract()
+cases = [i.replace(".","") for i in cases]
+# cases = [int(i) for i in cases]
+
+# create date column    
 date = [str(datetime.date.today() - datetime.timedelta(days = 1))] * 6
 # date = [str(datetime.date.today())] * 6
 
-
 # %% create daily dataframe
-# tall format
-df_tall = pd.DataFrame({'date': date, 'cases': cases, 'categories': categories})
-df_tall.head()
+# long format
+df_long = pd.DataFrame({'date': date, 'cases': cases, 'categories': categories})
+df_long.head()
 
 # wide format
-df_wide = df_tall.pivot(index = 'date', columns = 'categories', values = 'cases').reset_index()
+df_wide = df_long.pivot(index = 'date', columns = 'categories', values = 'cases').reset_index()
 df_wide.head()
 
 # %% update and save to csv
