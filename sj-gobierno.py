@@ -10,6 +10,9 @@ from scrapy import Selector
 import requests
 import pandas as pd
 import datetime
+import os
+import smtplib
+from email.message import EmailMessage
 
 # %% target website
 url = "https://sisanjuan.gob.ar/modulo-coronavirus"
@@ -42,11 +45,31 @@ df_long.head()
 df_wide = df_long.pivot(index = 'date', columns = 'categories', values = 'cases').reset_index()
 df_wide.head()
 
-# %% update and save to csv
-# read file with data from past days
+# %% read file with data from past days
 df_historical = pd.read_csv('data/covid-san-juan.csv')
 
-# append today's data
+# %% check we are not inserting a duplicate
+# check if the source dashboard has been updated. If not, send me an email
+if (df_wide.loc[0, 'Total confirmados'] == df_historical.loc[0, 'Total confirmados']) == True:
+    
+    # get email and password from environment variables
+    EMAIL_ADDRESS =  ${{secrets.EMAIL_ADDRESS}}
+    EMAIL_PASSWORD = ${{secrets.EMAIL_PASSWORD}}
+    
+    # set up email content
+    msg = EmailMessage()
+    msg['Subject'] = 'GitHub Actions: covid-19-san-juan'
+    msg['From'] = EMAIL_ADDRESS
+    msg['To'] = 'juanmacanovas@gmail.com'
+    msg.set_content('Numero de "Total confirmados" igual al dia anterior. El dashboard puede no estar actualizado.')
+    
+    # send email
+    with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
+        smtp.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
+        smtp.send_message(msg)
+
+# %% update and save to csv 
+# append today's data 
 df_historical = df_historical.append(df_wide).sort_values(by = 'date', ascending = False)
 
 # save updated file 
