@@ -29,7 +29,7 @@ categories = sel.css('.g-table-title h4 ::text').extract()
 
 # from the selector, extract cases
 cases = sel.css('div.g-table-price ::text').extract()
-cases = [i.replace(".","") for i in cases]
+cases = [i.replace(".", "") for i in cases]
 # cases = [int(i) for i in cases]
 
 # create date column    
@@ -53,8 +53,8 @@ df_historical = pd.read_csv('data/covid-san-juan.csv')
 if (df_wide.loc[0, 'Total confirmados'] == df_historical.loc[0, 'Total confirmados']) == True:
     
     # get email and password from environment variables
-    EMAIL_ADDRESS =  ${{secrets.EMAIL_ADDRESS}}
-    EMAIL_PASSWORD = ${{secrets.EMAIL_PASSWORD}}
+    EMAIL_ADDRESS =  os.environ.get('EMAIL_ADDRESS')
+    EMAIL_PASSWORD = os.environ.get('EMAIL_PASSWORD')
     
     # set up email content
     msg = EmailMessage()
