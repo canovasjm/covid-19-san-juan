@@ -53,8 +53,8 @@ df_historical = pd.read_csv('data/covid-san-juan.csv')
 if (df_wide.loc[0, 'Total confirmados'] == df_historical.loc[0, 'Total confirmados']) == True:
     
     # get email and password from environment variables
-    EMAIL_ADDRESS = os.getenv('EMAIL_ADDRESS')
-    EMAIL_PASSWORD = os.getenv('EMAIL_PASSWORD')
+    EMAIL_ADDRESS = os.environ.get('EMAIL_ADDRESS')
+    EMAIL_PASSWORD = os.environ.get('EMAIL_PASSWORD')
     
     # set up email content
     msg = EmailMessage()
