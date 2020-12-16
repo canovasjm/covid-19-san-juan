@@ -18,7 +18,7 @@ jobs:
           python-version: '3.7.7' # install the python version needed
 
       - name: execute py script # run sj-gobierno.py to get the latest data
-        env: 
+        env: |
           EMAIL_ADDRESS: ${{ secrets.EMAIL_ADDRESS }}
           EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
         run: |
