@@ -50,19 +50,20 @@ df_historical = pd.read_csv('data/covid-san-juan.csv')
 
 # %% check we are not inserting a duplicate
 # check if the source dashboard has been updated. If yes, update and save to csv 
-# If not, send me an email
+# if not, send me an email
 if (df_wide.loc[0, 'Total confirmados'] == df_historical.loc[0, 'Total confirmados']) == True:
     
     # get email and password from environment variables
     EMAIL_ADDRESS = os.environ.get('EMAIL_ADDRESS')
     EMAIL_PASSWORD = os.environ.get('EMAIL_PASSWORD')
+    EMAIL_RECIPIENT = os.environ.get('EMAIL_RECIPIENT')
     
     # set up email content
     msg = EmailMessage()
     msg['Subject'] = 'GitHub Actions: covid-19-san-juan'
     msg['From'] = EMAIL_ADDRESS
-    msg['To'] = 'juanmacanovas@gmail.com'
-    msg.set_content('Numero de "Total confirmados" igual al dia anterior. El dashboard puede no estar actualizado.')
+    msg['To'] = EMAIL_RECIPIENT
+    msg.set_content('Numero de "Total confirmados" igual al dia anterior. El dashboard no esta actualizado.')
     
     # send email
     with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
