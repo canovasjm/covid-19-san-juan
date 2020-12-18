@@ -49,7 +49,8 @@ df_wide.head()
 df_historical = pd.read_csv('data/covid-san-juan.csv')
 
 # %% check we are not inserting a duplicate
-# check if the source dashboard has been updated. If not, send me an email
+# check if the source dashboard has been updated. If yes, update and save to csv 
+# If not, send me an email
 if (df_wide.loc[0, 'Total confirmados'] == df_historical.loc[0, 'Total confirmados']) == True:
     
     # get email and password from environment variables
@@ -67,10 +68,10 @@ if (df_wide.loc[0, 'Total confirmados'] == df_historical.loc[0, 'Total confirmad
     with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
         smtp.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
         smtp.send_message(msg)
+        
+else:
+    # append today's data 
+    df_historical = df_historical.append(df_wide).sort_values(by = 'date', ascending = False)
 
-# %% update and save to csv 
-# append today's data 
-df_historical = df_historical.append(df_wide).sort_values(by = 'date', ascending = False)
-
-# save updated file 
-df_historical.to_csv('data/covid-san-juan.csv', index = False)
+    # save updated file 
+    df_historical.to_csv('data/covid-san-juan.csv', index = False)
