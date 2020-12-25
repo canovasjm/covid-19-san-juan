@@ -51,7 +51,7 @@ df_historical = pd.read_csv('data/covid-san-juan.csv')
 # %% check we are not inserting a duplicate
 # check if the source dashboard has been updated. If yes, update and save to csv 
 # if not, send me an email
-if (df_wide.loc[0, 'Total confirmados'] == df_historical.loc[0, 'Total confirmados']) == True:
+if (df_wide.loc[0, 'Total confirmados'] <= df_historical.loc[0, 'Total confirmados']) == True:
     
     # get email and password from environment variables
     EMAIL_ADDRESS = os.environ.get('EMAIL_ADDRESS')
