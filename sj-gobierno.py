@@ -48,10 +48,15 @@ df_wide.head()
 # %% read file with data from past days
 df_historical = pd.read_csv('data/covid-san-juan.csv')
 
+# %% get the latest value of 'Total confirmados' as a pandas series to use isin()
+last_total_confirmados = pd.Series(df_wide.loc[0, 'Total confirmados'])
+# type(last_total_confirmados)
+# type(last_total_confirmados.isin(df_historical['Total confirmados']))
+
 # %% check we are not inserting a duplicate
 # check if the source dashboard has been updated. If yes, update and save to csv 
 # if not, send me an email
-if (df_wide.loc[0, 'Total confirmados'] <= df_historical.loc[0, 'Total confirmados']) == True:
+if (last_total_confirmados.isin(df_historical['Total confirmados']).bool() == True):
     
     # get email and password from environment variables
     EMAIL_ADDRESS = os.environ.get('EMAIL_ADDRESS')
