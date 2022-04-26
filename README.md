@@ -16,6 +16,8 @@ Contenido:
 
 Más detalles en mi blog: https://canovasjm.netlify.app/2020/11/29/github-actions-run-a-python-script-on-schedule-and-commit-changes/
 
+**2022-04-18 ACTUALIZACION:** El Consejo Federal de Salud anunció que a partir del martes 2022-04-19 los reportes sobre COVID-19 se difundirán una vez por semana todos los días martes (más detalles aquí: [link](https://sisanjuan.gob.ar/salud-publica/2022-04-18/40273-el-parte-de-covid19-se-difundira-los-dias-martes-por-decision-del-consejo-federal-de-salud)). Por esta razón, detuve la GitHub Action que corre el script de scraping.
+
 # covid-19-san-juan  
 
 This repository contains a python script to scrape the "Coronavirus Module" maintained by the Government of San Juan Province, in Argentina. Link: https://sisanjuan.gob.ar/modulo-coronavirus  
@@ -31,3 +33,5 @@ Content:
 * `data/covid-san-juan.csv`: new data is saved here after each daily run.
 
 Full details in blogpost: https://canovasjm.netlify.app/2020/11/29/github-actions-run-a-python-script-on-schedule-and-commit-changes/
+
+**2022-04-18 UPDATE:** The Federal Health Council announced that starting on Tuesday 2022-04-19 COVID-19 reports will be published once a week every Tuesday (more details here: [link](https://sisanjuan.gob.ar/salud-publica/2022-04-18/40273-el-parte-de-covid19-se-difundira-los-dias-martes-por-decision-del-consejo-federal-de-salud)). For this reason, I stopped the GitHub Action running the scraping script.
